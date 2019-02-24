@@ -1,28 +1,40 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial;
-    padding: 10px;
-    background: #f1f1f1;
-  }
-  
-  /* Header/Blog Title */
   .header {
-    padding: 30px;
-    text-align: center;
-    background: white;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   
-  .header h1 {
-    font-size: 50px;
+  .header h1.logo {
+    font-size: 30px;
+    display: inline;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  .header img {
+    vertical-align: middle;
   }
   
-  /* Footer */
-  .footer {
+  .header h1.user-login {
+    font-size: 30px;
+    display: inline;
+    vertical-align: middle;
+  }
+
+  .header button.login-button {
+    font-size: 30px;
+    display: inline;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  .content {
+    flex: 1 0 auto;
     padding: 20px;
-    text-align: center;
-    background: #ddd;
-    margin-top: 20px;
+  }
+
+  .footer {
+    flex-shrink: 0;
+    padding: 20px;
   }
