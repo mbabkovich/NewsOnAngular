@@ -1,0 +1,16 @@
+.view-news-article {
+    display: flex;
+    align-items: flex-start;
+}
+
+.view-news-article img {
+    flex-grow: 1;
+}
+
+.view-news-article-content {
+
+}
+
+.view-news-article-control {
+
+}

@@ -1,3 +1,17 @@
-<p>
-  news works!
-</p>
+<div class="toolbar">
+  <div class="filter">
+    <select class="sources-select" [(ngModel)]="selectedSource">
+      <option *ngFor="let source of newsSources" [ngValue]="source">{{source.name}}</option>
+    </select>
+    <input class="search-input" type="text" [(ngModel)]="searchText">
+    <button class="apply-filter-button" (click)="applyFilter()">Apply Filter</button>
+    <input class="created-by-me-checkbox" type="checkbox" [(ngModel)]="createdByMe">Only created by me
+  </div>
+  <button class="add-article-button">Add Article</button>
+</div>
+
+<div class="app-news-articles-container">
+    <app-news-article *ngFor="let newsArticle of newsArticles" [newsArticle]="newsArticle">
+    </app-news-article>
+    <button class="load-more-button" (click)="onClickLoadMore()">Load More</button>
+</div>

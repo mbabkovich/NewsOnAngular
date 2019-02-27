@@ -1,0 +1,38 @@
+.toolbar {
+    /* overflow: auto; */
+}
+
+.filter {
+    /* overflow: auto; */
+    float: left;
+}
+
+.toolbar input {
+    margin: 5px;
+    vertical-align: center;
+}
+
+.toolbar button {
+    margin: 5px;
+    vertical-align: center;
+}
+
+.toolbar .search-input {
+    margin-left: 50px;
+}
+
+.toolbar .created-by-me-checkbox {
+    margin-left: 70px;
+}
+
+.toolbar .add-article-button {
+    float: right;
+}
+
+.app-news-articles-container {
+    clear: both;
+}
+
+.load-more-button {
+    width: 100%;
+}

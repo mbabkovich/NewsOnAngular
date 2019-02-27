@@ -1,8 +1,9 @@
   .header {
-    flex: 1 0 auto;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    flex: 0 0 auto;
   }
   
   .header h1.logo {
@@ -27,6 +28,14 @@
     display: inline;
     vertical-align: middle;
     margin-left: 10px;
+  }
+
+  .title-container {
+    background: lightslategray
+  }
+
+  .title {
+    text-align: center;
   }
 
   .content {

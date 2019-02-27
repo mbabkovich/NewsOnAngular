@@ -8,9 +8,12 @@
     <button class="login-button" (click)="onClickLogin()">Log In</button>
   </div>
 </div>
+<div class="title-container">
+  <h1 class="title">{{pageName}}</h1>
+</div>
 
 <div class="content">
-  
+  <router-outlet></router-outlet>
 </div>
 
 <div class="footer">

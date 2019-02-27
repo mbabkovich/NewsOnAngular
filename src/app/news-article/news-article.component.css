@@ -1,0 +1,47 @@
+.news-article {
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-article-content {
+    flex: 0 2 auto;
+    overflow: hidden;
+}
+
+.news-article-content img {
+    width: 150px;
+    float: left;
+    margin: 10px;
+    background: lightslategrey;
+    display: block;
+}
+
+.news-article-content h4 {
+    margin: 10px;
+    display: block;
+    overflow: hidden;
+}
+
+.news-article-content p {
+    margin: 10px;
+    overflow: hidden;
+}
+
+.news-article-control {
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.news-article-control h4 {
+    margin: 10px;
+    flex: 0 0 auto;
+}
+
+.news-article-control .buttons-container {
+    flex: 0 0 auto;
+}
+
+.news-article-control .buttons-container button {
+    margin: 10px;
+    display: block;
+}

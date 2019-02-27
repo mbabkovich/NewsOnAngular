@@ -1,0 +1,13 @@
+<div class="view-news-article">
+  <img [src]="newsArticle.urlToImage">
+  <div class="view-news-article-content">
+      <h4>{{newsArticle.title}}</h4>
+      <p>{{newsArticle.content}}</p>
+      <h4>{{newsArticle.publishedAt|date}}</h4>
+      <h4>{{newsArticle.author}}</h4>
+  </div>
+  <div class="view-news-article-control">
+    <button>Edit</button>
+    <button>Delete</button>
+  </div>
+</div>
