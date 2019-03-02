@@ -4,6 +4,10 @@ import { NewsComponent } from './news/news.component';
 import { ViewNewsArticleComponent } from './view-news-article/view-news-article.component';
 
 const routes: Routes = [
+  { path: '',
+    redirectTo: '/news',
+    pathMatch: 'full'
+  },
   { path: 'news', component: NewsComponent },
   { path: 'news/:id', component: ViewNewsArticleComponent }
 ];

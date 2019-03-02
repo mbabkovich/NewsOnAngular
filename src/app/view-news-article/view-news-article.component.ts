@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsArticlesCacheService } from '../services/news-articles-cache.service';
 import { ActivatedRoute } from '@angular/router';
 import { NewsArticle } from '../models/newsArticle';
+import { AppServiceService } from '../services/app-service.service';
 
 @Component({
   selector: 'app-view-news-article',
@@ -11,7 +12,8 @@ import { NewsArticle } from '../models/newsArticle';
 export class ViewNewsArticleComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private newsArticlesCacheService: NewsArticlesCacheService) { }
+              private newsArticlesCacheService: NewsArticlesCacheService,
+              private appServiceService: AppServiceService) { }
 
   newsArticle: NewsArticle;
 
@@ -22,5 +24,6 @@ export class ViewNewsArticleComponent implements OnInit {
   private getNewsArticle() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.newsArticle = this.newsArticlesCacheService.getNewsArticle(id);
+    this.appServiceService.changePageName(this.newsArticle.title);
   }
 }

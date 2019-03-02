@@ -3,6 +3,7 @@ import { NewsArticle } from '../models/newsArticle';
 import { NewsService } from '../services/news.service';
 import { NewsSource } from '../models/newsSource';
 import { NewsArticlesCacheService } from '../services/news-articles-cache.service';
+import { AppServiceService } from '../services/app-service.service';
 
 @Component({
   selector: 'app-news',
@@ -15,7 +16,8 @@ export class NewsComponent implements OnInit {
   private page: number;
 
   constructor(private newsService: NewsService,
-              private newsArticlesCacheService: NewsArticlesCacheService) {
+              private newsArticlesCacheService: NewsArticlesCacheService,
+              private appServiceService: AppServiceService) {
     this.page = 1;
    }
 
@@ -40,6 +42,7 @@ export class NewsComponent implements OnInit {
       return;
     }
     this.newsArticlesCacheService.selectedSource = value;
+    this.appServiceService.changePageName(value.name);
     this.getNewsArticle();
   }
 
@@ -61,7 +64,10 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getNewsSources();
+    if (!this.newsSources) {
+      this.appServiceService.changePageName('Select Source');
+      this.getNewsSources();
+    }
   }
 
   getNewsArticle(): void {
@@ -70,10 +76,7 @@ export class NewsComponent implements OnInit {
 
   getNewsSources(): void {
     this.newsService.getNewsSources()
-      .subscribe(newsSources => {
-        this.newsSources = newsSources;
-        this.selectedSource = this.newsArticlesCacheService.selectedSource;
-      });
+      .subscribe(newsSources => this.newsSources = newsSources);
   }
 
   applyFilter(): void {
