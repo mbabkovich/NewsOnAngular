@@ -16,6 +16,7 @@ export class NewsArticlesCacheService {
   newsSources: NewsSource[];
   selectedSource: NewsSource;
   searchText: string;
+  createdByMe: boolean;
 
   getNewsArticles(): NewsArticle[] {
     return this.newsArticles;
@@ -30,7 +31,7 @@ export class NewsArticlesCacheService {
     }
 
     for (let i = this.newsCounter; i < this.newsCounter + newsArticles.length; i++) {
-      this.newsArticles[i].id = i;
+      this.newsArticles[i].n = i;
     }
 
     this.newsCounter += newsArticles.length;

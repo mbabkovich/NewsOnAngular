@@ -36,3 +36,7 @@
 .load-more-button {
     width: 100%;
 }
+
+.hidden {
+    visibility: hidden;
+}

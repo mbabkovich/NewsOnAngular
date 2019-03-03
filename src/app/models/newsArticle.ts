@@ -1,7 +1,8 @@
 import { NewsArticleSource } from './newsArticleSource';
 
 export class NewsArticle {
-    id: number;
+    n: number;
+    id: string;
     source: NewsArticleSource;
     author: string;
     title: string;

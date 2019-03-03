@@ -1,0 +1,29 @@
+.news-article-editor {
+    display: flex;
+    align-items: stretch;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-input-container {
+    flex-grow: 3;
+    display: flex;
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+.content-input {
+    
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    margin: 10px;
+}

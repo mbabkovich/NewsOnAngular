@@ -22,7 +22,7 @@ export class ViewNewsArticleComponent implements OnInit {
   }
 
   private getNewsArticle() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('n');
     this.newsArticle = this.newsArticlesCacheService.getNewsArticle(id);
     this.appServiceService.changePageName(this.newsArticle.title);
   }

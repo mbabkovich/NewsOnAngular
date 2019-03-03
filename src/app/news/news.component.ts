@@ -4,6 +4,7 @@ import { NewsService } from '../services/news.service';
 import { NewsSource } from '../models/newsSource';
 import { NewsArticlesCacheService } from '../services/news-articles-cache.service';
 import { AppServiceService } from '../services/app-service.service';
+import { ExpressNewsService } from '../services/express-news.service';
 
 @Component({
   selector: 'app-news',
@@ -12,10 +13,10 @@ import { AppServiceService } from '../services/app-service.service';
 })
 export class NewsComponent implements OnInit {
   private static pageSize = 10;
-  private mCreatedByMe: boolean;
   private page: number;
 
   constructor(private newsService: NewsService,
+              private expressNewsService: ExpressNewsService,
               private newsArticlesCacheService: NewsArticlesCacheService,
               private appServiceService: AppServiceService) {
     this.page = 1;
@@ -55,19 +56,16 @@ export class NewsComponent implements OnInit {
   }
 
   get createdByMe(): boolean {
-    return this.mCreatedByMe;
+    return this.newsArticlesCacheService.createdByMe;
   }
 
   set createdByMe(value: boolean) {
-    this.mCreatedByMe = value;
-    this.getNewsArticle();
+    this.newsArticlesCacheService.createdByMe = value;
+    this.initialize();
   }
 
   ngOnInit() {
-    if (!this.newsSources) {
-      this.appServiceService.changePageName('Select Source');
-      this.getNewsSources();
-    }
+    this.initialize();
   }
 
   getNewsArticle(): void {
@@ -88,15 +86,39 @@ export class NewsComponent implements OnInit {
     this.loadArticles(false);
   }
 
-  private loadArticles(clearExistingArticles: boolean): void {
-    if (!this.newsArticlesCacheService.selectedSource) {
-      return;
+  private initialize() {
+    if (this.createdByMe) {
+      this.appServiceService.changePageName('News created by me');
     }
-    this.newsService.getNewsArticles(
-      this.newsArticlesCacheService.selectedSource.id, NewsComponent.pageSize, this.page, this.newsArticlesCacheService.searchText)
-      .subscribe(
-        articles => {
-          this.newsArticlesCacheService.addNewsArticles(articles, clearExistingArticles);
-        });
+    else {
+      if (!this.newsSources) {
+        this.getNewsSources();
+      }
+      
+      this.appServiceService.changePageName(this.selectedSource ? this.selectedSource.name : 'Select Source');
+    }
+
+    this.getNewsArticle();
+  }
+
+  private loadArticles(clearExistingArticles: boolean): void {
+    if (this.createdByMe) {
+      this.expressNewsService.getNewsArticles(
+        this.page, NewsComponent.pageSize)
+        .subscribe(
+          articles => {
+            this.newsArticlesCacheService.addNewsArticles(articles, clearExistingArticles);
+          });
+    } else {
+      if (!this.newsArticlesCacheService.selectedSource) {
+        return;
+      }
+      this.newsService.getNewsArticles(
+        this.newsArticlesCacheService.selectedSource.id, NewsComponent.pageSize, this.page, this.newsArticlesCacheService.searchText)
+        .subscribe(
+          articles => {
+            this.newsArticlesCacheService.addNewsArticles(articles, clearExistingArticles);
+          });
+    }
   }
 }
