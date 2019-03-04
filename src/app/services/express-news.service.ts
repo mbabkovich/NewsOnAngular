@@ -29,27 +29,18 @@ export class ExpressNewsService {
       );;
   }
 
-  addNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
-    return this.http.post<NewsArticle>(this.newsUrl, newsArticle)
-      .pipe(
-        catchError(this.handleError('addNewsArticle', newsArticle))
-      );;
+  addNewsArticle(newsArticle: NewsArticle): Observable<string> {
+    return this.http.post<string>(this.newsUrl, newsArticle);
   }
 
   updateNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
     const newsUrl = `${this.newsUrl}/${newsArticle.id}`;
-    return this.http.put<NewsArticle>(newsUrl, newsArticle)
-      .pipe(
-        catchError(this.handleError('addNewsArticle', newsArticle))
-      );;
+    return this.http.put<NewsArticle>(newsUrl, newsArticle);
   }
 
   deleteNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
     const newsUrl = `${this.newsUrl}/${newsArticle.id}`;
-    return this.http.delete<NewsArticle>(newsUrl)
-      .pipe(
-        catchError(this.handleError('addNewsArticle', newsArticle))
-      );;
+    return this.http.delete<NewsArticle>(newsUrl);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

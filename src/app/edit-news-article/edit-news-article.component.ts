@@ -12,7 +12,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-news-article.component.css']
 })
 export class EditNewsArticleComponent implements OnInit {
-  private addArticle: boolean;
   private newsArticle: NewsArticle;
   constructor(    
     private route: ActivatedRoute,
@@ -25,19 +24,19 @@ export class EditNewsArticleComponent implements OnInit {
   title: string;
   description: string;
   content: string;
-  imageSource: string;
-  newsDate: Date;
+  urlToImage: string;
+  publishedAt: string;
   author: string;
-  sourceUrl: string;
+  url: string;
 
   ngOnInit() {
     this.getNewsArticle();
   }
 
   private getNewsArticle() {
-    const id = +this.route.snapshot.paramMap.get('n');
-    if (id) {
-      this.newsArticle = this.newsArticlesCacheService.getNewsArticle(id);
+    const newsArticleNumber = this.route.snapshot.paramMap.get('n');
+    if (newsArticleNumber) {
+      this.newsArticle = this.newsArticlesCacheService.getNewsArticle(+newsArticleNumber);
       this.appServiceService.changePageName('Edit Article');
     } else {
       this.newsArticle = new NewsArticle();
@@ -46,14 +45,16 @@ export class EditNewsArticleComponent implements OnInit {
   }
 
   save() {
+    this.applyChanges();
     if (this.newsArticle.id) {
       this.expressNewsService.updateNewsArticle(this.newsArticle).subscribe(newsArticle => {
         this.router.navigate(["news"]);
       });
     }
     else {
-      this.expressNewsService.addNewsArticle(this.newsArticle).subscribe(newsArticle => {
-        this.newsArticlesCacheService.addNewsArticles([ newsArticle ], true);
+      this.expressNewsService.addNewsArticle(this.newsArticle).subscribe(id => {
+        this.newsArticle.id = id;
+        this.newsArticlesCacheService.addNewsArticles([ this.newsArticle ], true);
         this.router.navigate(["news"]);
       });
     }
@@ -61,5 +62,15 @@ export class EditNewsArticleComponent implements OnInit {
 
   cancel() {
     this.location.back();
+  }
+
+  private applyChanges() {
+    this.newsArticle.title = this.title;
+    this.newsArticle.description = this.description;
+    this.newsArticle.content = this.content;
+    this.newsArticle.urlToImage = this.urlToImage
+    this.newsArticle.publishedAt = this.publishedAt;
+    this.newsArticle.author = this.author;
+    this.newsArticle.url = this.url;
   }
 }
