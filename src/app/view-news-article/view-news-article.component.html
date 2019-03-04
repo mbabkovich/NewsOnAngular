@@ -7,7 +7,7 @@
       <h4>{{newsArticle.author}}</h4>
   </div>
   <div class="view-news-article-control">
-    <button routerLink="/news/{{newsArticle.counter}}/edit">Edit</button>
-    <button (click)="onClickDelete()">Delete</button>
+    <button [hidden]="!newsArticle.id" routerLink="/news/{{newsArticle.counter}}/edit">Edit</button>
+    <button [hidden]="!newsArticle.id" (click)="onClickDelete()">Delete</button>
   </div>
 </div>

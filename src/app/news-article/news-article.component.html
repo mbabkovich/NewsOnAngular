@@ -8,8 +8,8 @@
   <div class="news-article-control">
       <h4>{{newsArticle.publishedAt|date}}</h4>
       <div class="buttons-container">
-          <button routerLink="/news/{{newsArticle.counter}}/edit">Edit</button>
-          <button (click)="onClickDelete()">Delete</button>
+          <button [hidden]="!newsArticle.id" routerLink="/news/{{newsArticle.counter}}/edit">Edit</button>
+          <button [hidden]="!newsArticle.id" (click)="onClickDelete()">Delete</button>
       </div>      
   </div>
 </div>
