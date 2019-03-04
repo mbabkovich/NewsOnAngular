@@ -19,24 +19,21 @@ export class EditNewsArticleComponent implements OnInit {
     private expressNewsService: ExpressNewsService,
     private newsArticlesCacheService: NewsArticlesCacheService,
     private appServiceService: AppServiceService,
-    private location: Location) { }
+    private location: Location) {
+     }
 
-  title: string;
-  description: string;
-  content: string;
-  urlToImage: string;
-  publishedAt: string;
-  author: string;
-  url: string;
+  editNewsArticle: NewsArticle
 
   ngOnInit() {
-    this.getNewsArticle();
+    this.initializeArticle();
   }
 
-  private getNewsArticle() {
-    const newsArticleNumber = this.route.snapshot.paramMap.get('n');
+  private initializeArticle() {
+    const newsArticleNumber = this.route.snapshot.paramMap.get('counter');
+    this.editNewsArticle = new NewsArticle();
     if (newsArticleNumber) {
       this.newsArticle = this.newsArticlesCacheService.getNewsArticle(+newsArticleNumber);
+      Object.assign(this.editNewsArticle, this.newsArticle);
       this.appServiceService.changePageName('Edit Article');
     } else {
       this.newsArticle = new NewsArticle();
@@ -45,7 +42,7 @@ export class EditNewsArticleComponent implements OnInit {
   }
 
   save() {
-    this.applyChanges();
+    Object.assign(this.newsArticle, this.editNewsArticle);
     if (this.newsArticle.id) {
       this.expressNewsService.updateNewsArticle(this.newsArticle).subscribe(newsArticle => {
         this.router.navigate(["news"]);
@@ -54,7 +51,8 @@ export class EditNewsArticleComponent implements OnInit {
     else {
       this.expressNewsService.addNewsArticle(this.newsArticle).subscribe(id => {
         this.newsArticle.id = id;
-        this.newsArticlesCacheService.addNewsArticles([ this.newsArticle ], true);
+        this.newsArticlesCacheService.clearNewsArticles();
+        this.newsArticlesCacheService.addNewsArticles([ this.newsArticle ]);
         this.router.navigate(["news"]);
       });
     }
@@ -62,15 +60,5 @@ export class EditNewsArticleComponent implements OnInit {
 
   cancel() {
     this.location.back();
-  }
-
-  private applyChanges() {
-    this.newsArticle.title = this.title;
-    this.newsArticle.description = this.description;
-    this.newsArticle.content = this.content;
-    this.newsArticle.urlToImage = this.urlToImage
-    this.newsArticle.publishedAt = this.publishedAt;
-    this.newsArticle.author = this.author;
-    this.newsArticle.url = this.url;
   }
 }

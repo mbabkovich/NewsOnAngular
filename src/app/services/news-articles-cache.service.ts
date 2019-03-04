@@ -22,26 +22,28 @@ export class NewsArticlesCacheService {
     return this.newsArticles;
   }
 
-  addNewsArticles(newsArticles: NewsArticle[], replace: boolean) {
-    if (replace) {
-      this.newsCounter = 0;
-      this.newsArticles = newsArticles;
-    } else {
-      this.newsArticles = this.newsArticles.concat(newsArticles);
-    }
-
+  addNewsArticles(newsArticles: NewsArticle[]) {
+    this.newsArticles = this.newsArticles.concat(newsArticles);
     for (let i = this.newsCounter; i < this.newsCounter + newsArticles.length; i++) {
-      this.newsArticles[i].n = i;
+      this.newsArticles[i].counter = i;
     }
 
     this.newsCounter += newsArticles.length;
   }
 
-  getNewsArticle(id: number) {
-    return this.newsArticles[id];
+  getNewsArticle(counter: number) {
+    return this.newsArticles[counter];
   }
 
-  clear(): void {
+  deleteNewsArticle(counter: number) {
+    this.newsArticles.splice(counter, 1);
+    for (let i = counter; i < this.newsArticles.length; i++) {
+      this.newsArticles[i].counter--;
+    }
+  }
+
+  clearNewsArticles(): void {
     this.newsArticles = [];
+    this.newsCounter = 0;
   }
 }

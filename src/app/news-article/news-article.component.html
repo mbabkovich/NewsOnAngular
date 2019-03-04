@@ -3,13 +3,13 @@
       <img [src]="newsArticle.urlToImage">
       <h4>{{newsArticle.title}}</h4>
       <p>{{newsArticle.description}}</p>
-      <a routerLink="/news/{{newsArticle.n}}">Read more...</a>
+      <a routerLink="/news/{{newsArticle.counter}}">Read more...</a>
   </div>
   <div class="news-article-control">
       <h4>{{newsArticle.publishedAt|date}}</h4>
       <div class="buttons-container">
-          <button>Edit</button>
-          <button>Delete</button>
+          <button routerLink="/news/{{newsArticle.counter}}/edit">Edit</button>
+          <button (click)="onClickDelete()">Delete</button>
       </div>      
   </div>
 </div>

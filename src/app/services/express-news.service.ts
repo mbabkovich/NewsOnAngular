@@ -4,6 +4,7 @@ import { Constants } from './constants';
 import { Observable, of } from 'rxjs';
 import { NewsArticle } from '../models/newsArticle';
 import { map, catchError } from 'rxjs/operators';
+import { NewsResponse } from '../models/newsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -15,32 +16,43 @@ export class ExpressNewsService {
 
   getNewsArticles(page, pageSize): Observable<NewsArticle[]> {
     let newsUrl = `${this.newsUrl}/${page}/${pageSize}`;
-    return this.http.get<any>(newsUrl)
+    return this.http.get<NewsResponse<NewsArticle[]>>(newsUrl)
       .pipe(
+        map(response => response.data),
         catchError(this.handleError('getNewsArticles', []))
       );
   }
 
-  getNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
-    const newsUrl = `${this.newsUrl}/${newsArticle.id}`;
-    return this.http.post<NewsArticle>(newsUrl, newsArticle)
+  getNewsArticle(id: string): Observable<NewsArticle> {
+    const newsUrl = `${this.newsUrl}/${id}`;
+    return this.http.get<NewsResponse<NewsArticle>>(newsUrl)
       .pipe(
-        catchError(this.handleError('addNewsArticle', newsArticle))
-      );;
+        map(response => response.data),
+        catchError(this.handleError('getNewsArticle', null))
+      );
   }
 
   addNewsArticle(newsArticle: NewsArticle): Observable<string> {
-    return this.http.post<string>(this.newsUrl, newsArticle);
+    return this.http.post<NewsResponse<string>>(this.newsUrl, newsArticle).pipe(
+      map(response => response.data),
+      catchError(this.handleError('addNewsArticle', null))
+    );
   }
 
-  updateNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
+  updateNewsArticle(newsArticle: NewsArticle): Observable<void> {
     const newsUrl = `${this.newsUrl}/${newsArticle.id}`;
-    return this.http.put<NewsArticle>(newsUrl, newsArticle);
+    return this.http.put<NewsResponse<void>>(newsUrl, newsArticle).pipe(
+      map(response => response.data),
+      catchError(this.handleError('updateNewsArticle', null))
+    );
   }
 
-  deleteNewsArticle(newsArticle: NewsArticle): Observable<NewsArticle> {
+  deleteNewsArticle(newsArticle: NewsArticle): Observable<void> {
     const newsUrl = `${this.newsUrl}/${newsArticle.id}`;
-    return this.http.delete<NewsArticle>(newsUrl);
+    return this.http.delete<NewsResponse<void>>(newsUrl).pipe(
+      map(response => response.data),
+      catchError(this.handleError('deleteNewsArticle', null))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

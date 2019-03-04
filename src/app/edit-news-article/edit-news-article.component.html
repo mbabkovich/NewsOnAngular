@@ -1,14 +1,14 @@
 <div class="news-article-editor">
   <div class="left-side">
-      <div class="title-input-container"><input class="title-input" type="text" [(ngModel)]="title">Heading</div>
-      <div class="description-input-container"><input class="description-input" type="text" [(ngModel)]="description">Short description</div>
-      <div class="content-input-container"><input class="content-input" type="text" [(ngModel)]="content">Content</div>
+      <div class="title-input-container"><input class="title-input" type="text" [(ngModel)]="editNewsArticle.title">Heading</div>
+      <div class="description-input-container"><input class="description-input" type="text" [(ngModel)]="editNewsArticle.description">Short description</div>
+      <div class="content-input-container"><input class="content-input" type="text" [(ngModel)]="editNewsArticle.content">Content</div>
   </div>
   <div class="right-side">
-      <div class="image-input-container"><input class="image-input" type="text" [(ngModel)]="urlToImage">Image</div>
-      <div class="news-date-input-container"><input class="news-date-input" type="text" [(ngModel)]="publishedAt">Date</div>
-      <div class="author-input-container"><input class="author-input" type="text" [(ngModel)]="author">Author</div>
-      <div class="source-url-input-container"><input class="source-url-input" type="text" [(ngModel)]="url">Source URL</div>
+      <div class="image-input-container"><input class="image-input" type="text" [(ngModel)]="editNewsArticle.urlToImage">Image</div>
+      <div class="news-date-input-container"><input class="news-date-input" type="text" [(ngModel)]="editNewsArticle.publishedAt">Date</div>
+      <div class="author-input-container"><input class="author-input" type="text" [(ngModel)]="editNewsArticle.author">Author</div>
+      <div class="source-url-input-container"><input class="source-url-input" type="text" [(ngModel)]="editNewsArticle.url">Source URL</div>
       <div class="buttons-container">
         <button class="save-button" (click)="save()">Save</button>
         <button class="cancel-button" (click)="cancel()">Cancel</button>

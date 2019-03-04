@@ -102,12 +102,15 @@ export class NewsComponent implements OnInit {
   }
 
   private loadArticles(clearExistingArticles: boolean): void {
+    if (clearExistingArticles) {
+      this.newsArticlesCacheService.clearNewsArticles();
+    }
     if (this.createdByMe) {
       this.expressNewsService.getNewsArticles(
-        this.page, NewsComponent.pageSize)
+        this.page - 1, NewsComponent.pageSize)
         .subscribe(
           articles => {
-            this.newsArticlesCacheService.addNewsArticles(articles, clearExistingArticles);
+            this.newsArticlesCacheService.addNewsArticles(articles);
           });
     } else {
       if (!this.newsArticlesCacheService.selectedSource) {
@@ -117,7 +120,7 @@ export class NewsComponent implements OnInit {
         this.newsArticlesCacheService.selectedSource.id, NewsComponent.pageSize, this.page, this.newsArticlesCacheService.searchText)
         .subscribe(
           articles => {
-            this.newsArticlesCacheService.addNewsArticles(articles, clearExistingArticles);
+            this.newsArticlesCacheService.addNewsArticles(articles);
           });
     }
   }

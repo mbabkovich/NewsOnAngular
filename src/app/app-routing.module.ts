@@ -10,9 +10,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'news', component: NewsComponent },
-  { path: 'news/:n', component: ViewNewsArticleComponent },
+  { path: 'news/:counter', component: ViewNewsArticleComponent },
   { path: 'add-news-article', component: EditNewsArticleComponent, data: {addArticle: true} },
-  { path: 'news/:n/edit', component: EditNewsArticleComponent, data: {addArticle: false} }
+  { path: 'news/:counter/edit', component: EditNewsArticleComponent, data: {addArticle: false} }
 ];
 
 @NgModule({

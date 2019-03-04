@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NewsArticle } from '../models/newsArticle';
+import { ExpressNewsService } from '../services/express-news.service';
+import { NewsArticlesCacheService } from '../services/news-articles-cache.service';
 
 @Component({
   selector: 'app-news-article',
@@ -8,9 +10,17 @@ import { NewsArticle } from '../models/newsArticle';
 })
 export class NewsArticleComponent implements OnInit {
   @Input() newsArticle: NewsArticle;
-  constructor() { }
+  constructor(
+    private expressNewsService: ExpressNewsService,
+    private newsArticlesCacheService: NewsArticlesCacheService) {
+     }
 
   ngOnInit() {
   }
 
+  onClickDelete() {
+    this.expressNewsService.deleteNewsArticle(this.newsArticle).subscribe(
+      () => this.newsArticlesCacheService.deleteNewsArticle(this.newsArticle.counter)
+    );
+  }
 }
